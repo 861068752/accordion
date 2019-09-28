@@ -1,0 +1,95 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="UTF-8">
+		<title>transition方式的手风琴</title>
+		<style type="text/css">
+			*{
+				padding: 0;
+				margin: 0;
+				list-style: none;
+			}
+			.box{
+				width: 1400px;
+				height: 460px;
+				margin: 100px auto;
+				background: gainsboro;
+				position: relative;
+				overflow: hidden;
+			}
+			.imgul{
+				width: 100%;
+				height: 100%;
+				position: absolute;
+				top: 0;
+				left: 0;
+			}
+			.imgul li{
+				height: 100%;
+				float: left;
+				transition: all 1s; 
+			}
+			.imgul li a{
+				display: block;
+				
+				height: 100%;
+			}
+			.imgul li a img{
+				display: block;
+				
+				height: 100%;
+			}
+		</style>
+	</head>
+	<body>
+		<div class="box"></div>
+		
+	</body>
+	<script type="text/javascript">
+		var box = document.getElementsByClassName("box")[0];
+		var imgData = ['qinimg/1.jpg','qinimg/2.jpg','qinimg/3.jpg','qinimg/4.jpg','qinimg/5.jpg'];
+		
+		function accordion(obj,data){
+			//创建图片骨架
+			var html = makeImgFrame(data);
+			obj.innerHTML = html;
+			makeDomStyle(obj);
+			
+		}
+		function makeImgFrame(data){
+			var html = '<ul class="imgul">';
+			for(var i=0;i<data.length;i++){
+				html+= '<li><a href="imgDatas.html?imgid='+i+'"><img src="'+data[i]+'"/></a></li>'
+			}
+			    html+='</ul>';
+			    return html;
+		}
+		function makeDomStyle(obj){
+			var imgul = obj.children[0];
+			var lis = imgul.children;
+			var a = lis[0].children[0];
+			var img = a.children[0];
+			for(var i=0;i<lis.length;i++){
+				lis[i].style.width = 1/lis.length*100 + "%";
+				lis[i].style.height =obj.offsetHeight + "px";
+				lis[i].addEventListener('mouseover',function(){
+					for(var i=0;i<lis.length;i++){
+						lis[i].style.width = "150px";
+					}
+					this.style.width = "800px";
+				})
+				
+				lis[i].addEventListener('mouseout',function(){
+					for(var i=0;i<lis.length;i++){
+						lis[i].style.width = "280px";
+					}
+					
+				})
+			}
+		}
+		
+		
+		accordion(box,imgData)
+		
+	</script>
+</html>
